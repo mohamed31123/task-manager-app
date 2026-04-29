@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -24,5 +25,10 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    //ralation avec task
+
+    @OneToMany(mappedBy = "category")
+    private List<Tache> taches ;
 
 }

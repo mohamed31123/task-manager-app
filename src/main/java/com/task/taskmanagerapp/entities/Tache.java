@@ -1,10 +1,14 @@
 package com.task.taskmanagerapp.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.task.taskmanagerapp.enums.TaskStatus;
+import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.scheduling.config.Task;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Tache {
@@ -13,4 +17,37 @@ public class Tache {
     private Long id;
     private String title;
     private  String description;
+    @CreatedDate
+    private LocalDateTime creationDate;
+
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
+
+    private LocalDateTime deadline;
+
+    private int EstimatedHours ;
+
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_category")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
+
+    @OneToMany(mappedBy = "tache")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "tache")
+    private List<TaskHistory> taskHistories;
+
+    @OneToMany
+    private List<TaskTags> taskTags;
+
+
 }
